@@ -121,7 +121,7 @@ router.post("/sign_up", async function (req, res, next) {
                 res.json({
                     status: true,
                     statusCode: 201,
-                    message: "New Learner Created Successfully",
+                    message: "New Teacher Created Successfully",
                     data: saveUser
                 })
             } else {
@@ -136,8 +136,8 @@ router.post("/sign_up", async function (req, res, next) {
         } else {
             res.json({
                 status: false,
-                statusCode: 200,
-                message: "This User Already Exits",
+                statusCode: 400,
+                message: "This teacher is Already Exits",
                 data: ""
             })
         }
@@ -166,7 +166,6 @@ router.post("/login", async function (req, res) {
 
         if (checkUser) {
                     if (checkUser.password === password) {
-                        // let updateOtp=await user.updateOne({_id : checkUser._id}, {$set :{is_verified:1}});
                         let payload = {
                             id: checkUser._id,
                             email: checkUser.email
@@ -191,7 +190,7 @@ router.post("/login", async function (req, res) {
         } else {
             res.json({
                 status: false,
-                statusCode: 200,
+                statusCode: 400,
                 message: "This User does not Exits",
                 data: ""
             })
