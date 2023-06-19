@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Vecotr from "./images/Vector.png";
 import Cap from "./images/cap.png";
 import Setting from "./images/setting.png";
@@ -14,8 +14,13 @@ import imageuser from "./images/Illustration.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
 import ViewDetails from "./Components/ViewDetails";
-function Home() {
+import { useSelector } from "react-redux";
+
+
+
+const Home = () => {
   const [show, setshow] = useState(true);
+  const [name, setName] = useState("");
   const [setting, setsetting] = useState(false);
   const [openModal, setsetOpenModal] = useState(false);
   const [view, setview] = useState(false);
@@ -23,6 +28,15 @@ function Home() {
   const handleShow = () => setsetOpenModal(true);
   const [course, setcourse] = useState(false);
   const [viewDetail, setViewDetail] = useState(false);
+
+  const LoginRes = useSelector((state) => state.logIn.token.data);
+  console.log('sfsf... ', LoginRes);
+
+  useEffect(()=>{
+    if(LoginRes && LoginRes.data && LoginRes.data.name){
+      setName(LoginRes.data.name);
+    }
+  },[LoginRes])
 
   return (
     <>
@@ -71,7 +85,9 @@ function Home() {
           <div className="header">
             <div className="leftsection">
               <div style={{ marginLeft: "30px" }}>
-                <h1 className="header-head">Hello Krishna!</h1>
+                <h1 className="header-head">
+                  Hello! {name}
+                </h1>
                 <p style={{ fontWeight: "600" }} className="header-text">
                   its good to see you again
                 </p>

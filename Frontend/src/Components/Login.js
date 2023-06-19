@@ -1,27 +1,64 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LoginApi } from "../../src/redux/actions/loginAction";
-function Login() {
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { SignupSuccess } from "../redux/actions/signupTeacherAction";
+import { SignupSuccesss } from "../redux/actions/signupStudentAction";
+
+
+
+const Login = ()=>{
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const LoginRes = useSelector((state) => state.logIn.token.data);
+  const SignupTeacherRes = useSelector((state) => state.signupTeacher.token.data);
+  console.log('loginres... ', LoginRes);
+
+  useEffect(()=>{
+    dispatch(SignupSuccess(''));
+    dispatch(SignupSuccesss(''));
+  },[SignupTeacherRes])
+
+  useEffect(()=>{
+    if(LoginRes && LoginRes.status){
+      toast.success(LoginRes.message);
+      setTimeout(() => {
+        navigate("/Home");
+
+      }, 2000);
+    }
+    if(LoginRes && LoginRes.status === false){
+      toast.error(LoginRes.message);
+
+    }
+  },[LoginRes])
 
   const loginApiCall = (e) => {
     e.preventDefault(); // Prevent default form submission behavior
-    const sendData = {
-      email: email,
-      password: password
+    if(email === '' && password === ''){
+      toast.error("Please enter Email id and password");
+    }else if(email === ''){
+      toast.error("Please enter Email id");
+    }else if(password === ""){
+      toast.error("Please enter Password");
+    }else{
+      const sendData = {
+        email: email,
+        password: password
+      }
+      console.log('sendData... ', sendData);
+      dispatch(LoginApi(sendData));
     }
-    console.log('sendData... ', sendData);
-    dispatch(LoginApi(sendData));
-
   }
   return (
     <>
+            <ToastContainer autoClose={2000} />
       <div className="login-container">
         <div className="screen">
           <div className="screen__content">

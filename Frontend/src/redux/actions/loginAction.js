@@ -27,19 +27,12 @@ export const LoginApi = (data) => (dispatch) => {
   try {
     dispatch(LoginRequest());
     JwtAuthService.loginApiService(data).then((response) => {
-      console.log('data......sss.... ',  response)
+      console.log('data......response.... ',  response)
       if (response?.status) {
-        toast.success(`${response?.data?.message}`);
+        // toast.success(`${response?.data?.message}`);
         dispatch(LoginSuccess(response));
       } else {
         dispatch(LoginFailed(response));
-        // if (
-        //   response?.response?.data?.message === "Email/Phone Number not found."
-        // ) {
-        //   toast.error("Email id not found");
-        // } else {
-        //   toast.error(`${response?.response?.data?.message}`);
-        // }
       }
     });
   } catch (error) {

@@ -1,8 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import {  SignupTeacherApi } from "../redux/actions/signupTeacherAction";
+import { toast } from "react-toastify";
 
-function SignupTeacher() {
+const SignupTeacher = ()=> {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [specialization, setSpecialization] = useState('');
+  const [qualifications, setQualifications] = useState('');
+  const [experince, setExperince] = useState('');
+
+  const SignupTeacherRes = useSelector((state) => state.signupTeacher.token.data);
+  console.log('SignupTeacherRes... ', SignupTeacherRes);
+
+
+  useEffect(()=>{
+    if(SignupTeacherRes && SignupTeacherRes.status){
+      toast.success(SignupTeacherRes.message);
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    }
+    if(SignupTeacherRes && SignupTeacherRes.status === false){
+      toast.error(SignupTeacherRes.message);
+    }
+  },[SignupTeacherRes])
+
+  const signUpTeacherApiCall = (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+    const sendData = {
+      name: fullName,
+      email: email,
+      password: password,
+      experience: experince,
+      area_of_teaching: qualifications,
+      specialization: specialization,
+    }
+    console.log('sendData... ', sendData);
+    dispatch(SignupTeacherApi(sendData));
+  }
+
+
   return (
     <>
       <div className="login-container">
@@ -18,6 +60,7 @@ function SignupTeacher() {
                   type="text"
                   className="login__input2"
                   placeholder="Full Name"
+                  onChange={(e)=>setFullName(e.target.value)}
                 />
               </div>
               <div className="login__field">
@@ -26,6 +69,8 @@ function SignupTeacher() {
                   type="text"
                   className="login__input2"
                   placeholder="Email Address"
+                  onChange={(e)=>setEmail(e.target.value)}
+
                 />
               </div>
               <div className="login__field">
@@ -34,41 +79,42 @@ function SignupTeacher() {
                   type="password"
                   className="login__input2"
                   placeholder="Password"
+                  onChange={(e)=>setPassword(e.target.value)}
                 />
               </div>
               <div className="login__field">
-                <select name="pets" id="pet-select" className="login__input2">
+                <select name="pets" id="pet-select" className="login__input2" value={specialization} onChange={(e) => setSpecialization(e.target.value)}>
                   <option value="">Specialization</option>
-                  <option value="dog">Python</option>
-                  <option value="cat">JavaScript</option>
-                  <option value="hamster">Reactjs</option>
-                  <option value="parrot">Nodejs</option>
-                  <option value="parrot">SQL</option>
-                  <option value="audi">Mongo</option>
+                  <option value="Python">Python</option>
+                  <option value="JavaScript">JavaScript</option>
+                  <option value="Reactjs">Reactjs</option>
+                  <option value="Nodejs">Nodejs</option>
+                  <option value="SQL">SQL</option>
+                  <option value="Mongo">Mongo</option>
                 </select>
               </div>
 
               <div className="login__field">
-                <select name="pets" id="pet-select" className="login__input2">
+                <select name="pets" id="pet-select" className="login__input2" value={qualifications} onChange={(e) => setQualifications(e.target.value)}>
                   <option value="">Qualifications</option>
-                  <option value="dog">High School Diploma</option>
-                  <option value="cat">Associate's Degree</option>
-                  <option value="hamster">Bachelor's Degree</option>
-                  <option value="parrot">Master's Degree</option>
-                  <option value="parrot">PhD or Doctorate</option>
-                  <option value="spider">Teaching Certification</option>
-                  <option value="parrot">Other</option>
+                  <option value="High School Diploma">High School Diploma</option>
+                  <option value="Associate's Degree">Associate's Degree</option>
+                  <option value="Bachelor's Degree">Bachelor's Degree</option>
+                  <option value="Master's Degree">Master's Degree</option>
+                  <option value="PhD or Doctorate">PhD or Doctorate</option>
+                  <option value="Teaching Certification">Teaching Certification</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
 
               <div className="login__field">
-                <select name="pets" id="pet-select" className="login__input2">
+                <select name="pets" id="pet-select" className="login__input2" value={experince} onChange={(e) => setExperince(e.target.value)}>
                   <option value="">Teaching Experince</option>
-                  <option value="volvo">More than 1 year</option>
-                  <option value="saab">1-3 years</option>
-                  <option value="opel">3-5 years</option>
-                  <option value="audi">5-10 years</option>
-                  <option value="audi">More Than 10 years</option>
+                  <option value="More than 1 year">More than 1 year</option>
+                  <option value="1-3 years">1-3 years</option>
+                  <option value="3-5 years">3-5 years</option>
+                  <option value="5-10 years">5-10 years</option>
+                  <option value="More Than 10 years">More Than 10 years</option>
                 </select>
               </div>
               <h5
@@ -83,9 +129,10 @@ function SignupTeacher() {
             </form>
             <button
               className="signupbtn"
-              onClick={() => {
-                navigate("/Home");
-              }}
+              onClick={
+                signUpTeacherApiCall
+                // navigate("/Home");
+              }
             >
               Signup
             </button>

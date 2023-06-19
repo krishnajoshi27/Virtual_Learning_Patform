@@ -3,34 +3,34 @@
 import JwtAuthService from "../../Utils/ApiConfig";
 
 import {
-  LOGIN_ERROR,
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
+  SIGN_UP_STUDENT_REQUEST,
+  SIGN_UP_STUDENT_SUCCESS,
+  SIGN_UP_STUDENT_ERROR,
 } from "../types/Types";
 import { toast } from "react-toastify";
 
-export const SignupRequest = (login) => ({
-  type: LOGIN_REQUEST,
-  payload: login,
+export const SignupRequest = (signup) => ({
+  type: SIGN_UP_STUDENT_REQUEST,
+  payload: signup,
 });
-export const SignupSuccess = (login) => ({
-  type: LOGIN_SUCCESS,
-  payload: login,
+export const SignupSuccesss = (signup) => ({
+  type: SIGN_UP_STUDENT_SUCCESS,
+  payload: signup,
 });
 export const SignupFailed = (error) => ({
-  type: LOGIN_ERROR,
+  type: SIGN_UP_STUDENT_ERROR,
   payload: error,
 });
 
-export const SignupApi = (data) => (dispatch) => {
-  console.log('data.... ', data);
+export const SignupStudentApi = (data) => (dispatch) => {
+  console.log(' SignupApi data.... ', data);
   try {
     dispatch(SignupRequest());
-    JwtAuthService.loginApiService(data).then((response) => {
-      console.log('data......sss.... ',  response)
+    JwtAuthService.signupStudentApiService(data).then((response) => {
+      console.log('data......response.... ',  response)
       if (response?.status) {
         toast.success(`${response?.data?.message}`);
-        dispatch(SignupSuccess(response));
+        dispatch(SignupSuccesss(response));
       } else {
         dispatch(SignupFailed(response));
       }

@@ -1,7 +1,8 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { SignupApi } from "../redux/actions/signupStudentAction";
-import { useDispatch } from "react-redux";
+import { SignupStudentApi } from "../redux/actions/signupStudentAction";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 function SignupStudent() {
   const navigate = useNavigate();
@@ -13,6 +14,21 @@ function SignupStudent() {
   const [areaOfStudy, setAreaOfStudy] = useState('');
   const [skills, setSkills] = useState('');
   const [language, setLanguage] = useState('');
+
+  const SignupStudentRes = useSelector((state) => state.signupStudent.token);
+  console.log('SignupStudentRes... ', SignupStudentRes);
+
+  useEffect(()=>{
+    if(SignupStudentRes && SignupStudentRes.status){
+      toast.success(SignupStudentRes.message);
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    }
+    if(SignupStudentRes && SignupStudentRes.status === false){
+      toast.error(SignupStudentRes.message);
+    }
+  },[SignupStudentRes])
 
 
   const signUpStudentApiCall = (e) => {
@@ -27,7 +43,7 @@ function SignupStudent() {
       language:language
     }
     console.log('sendData... ', sendData);
-    dispatch(SignupApi(sendData));
+    dispatch(SignupStudentApi(sendData));
   }
 
   return (

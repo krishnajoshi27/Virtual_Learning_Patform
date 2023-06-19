@@ -1,5 +1,12 @@
 import React from "react";
-function Dashboard() {
+import { useSelector } from "react-redux";
+
+
+const Dashboard = () => {
+
+  const LoginRes = useSelector((state) => state.logIn.token.data);
+  console.log('sfsf... ', LoginRes);
+
   return (
     <>
       <div>
