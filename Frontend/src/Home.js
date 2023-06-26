@@ -19,14 +19,14 @@ import { useSelector } from "react-redux";
 
 
 const Home = () => {
-  const [show, setshow] = useState(true);
-  const [name, setName] = useState("");
+  const [show, setshow] = useState(false);
+  const [name, setName] = useState(true);
   const [setting, setsetting] = useState(false);
   const [openModal, setsetOpenModal] = useState(false);
   const [view, setview] = useState(false);
   const handleClose = () => setsetOpenModal(false);
   const handleShow = () => setsetOpenModal(true);
-  const [course, setcourse] = useState(false);
+  const [course, setcourse] = useState(true);
   const [viewDetail, setViewDetail] = useState(false);
 
   const LoginRes = useSelector((state) => state.logIn.token.data);
@@ -46,10 +46,10 @@ const Home = () => {
 
           <Link
             onClick={() => (
-              setshow(true),
+              setshow(false),
               setsetting(false),
               setview(false),
-              setcourse(false),
+              setcourse(true),
               setViewDetail(false)
             )}
           >
@@ -57,10 +57,10 @@ const Home = () => {
           </Link>
           <Link
             onClick={() => (
-              setshow(false),
+              setshow(true),
               setsetting(false),
               setview(false),
-              setcourse(true),
+              setcourse(false),
               setViewDetail(false)
             )}
           >

@@ -84,13 +84,11 @@ function SignupStudent() {
               </div>
               <div className="login__field">
                 <select name="Level" className="login__input2" value={gradLevel} onChange={(e) => setGradLevel(e.target.value)}>
-                  <option value="">Grade/Level</option>
-                  <option value="First">First</option>
-                  <option value="Second">Second</option>
-                  <option value="Third">Third</option>
-                  <option value="Fourth">Fourth</option>
-                  <option value="Fifth">Fifth</option>
-                  <option value="Sixth">Sixth</option>
+                  <option value="">Knowledge Level</option>
+                  <option value="First">Beginner</option>
+                  <option value="Second">Intermediate</option>
+                  <option value="Third">Advance</option>
+                  <option value="Fourth">Fluent</option>
                 </select>
               </div>
 
@@ -111,21 +109,6 @@ function SignupStudent() {
                   <option value="Other">Other</option>
                 </select>
               </div>
-
-              {/* <div className="login__field">
-                <select
-                  name="Learning Objective"
-                  id="pet-select"
-                  className="login__input2"
-                >
-                  <option value="">Learning Objective</option>
-                  <option value="volvo">More than 1 year</option>
-                  <option value="saab">1-3 years</option>
-                  <option value="opel">3-5 years</option>
-                  <option value="audi">5-10 years</option>
-                  <option value="audi">More Than 10 years</option>
-                </select>
-              </div> */}
               <div className="login__field">
                 <select name="Skills" id="pet-select" className="login__input2"  value={skills} onChange={(e) => setSkills(e.target.value)}>
                   <option value="">Skills</option>
@@ -137,7 +120,24 @@ function SignupStudent() {
                   <option value="Mongo">Mongo</option>
                 </select>
               </div>
+              
               <div className="login__field">
+                <select
+                  name="Learning Objective"
+                  id="pet-select"
+                  className="login__input2"
+                >
+                  <option value="">Learning Objective</option>
+                  <option value="one">Become a Web Developer</option>
+                  <option value="two">To obtain Data Analytics and Problem-Solving abilities</option>
+                  <option value="three">Gain Logic Development skills</option>
+                  <option value="four">Become Dev-Ops Engineer</option>
+                  <option value="five">Become a Software Developer</option>
+                  <option value="five">Develop Artificial Intelligence professional</option>
+                  <option value="five">Acquire knowledge of Quality Assurance</option>
+                </select>
+              </div>
+              {/* <div className="login__field">
                 <select
                   name="Preferred language"
                   id="pet-select"
@@ -148,7 +148,7 @@ function SignupStudent() {
                   <option value="Englist(UK)">Englist(UK)</option>
                   <option value="Hindi">Hindi</option>
                 </select>
-              </div>
+              </div> */}
               <h5
                 className="signup"
                 onClick={() => {

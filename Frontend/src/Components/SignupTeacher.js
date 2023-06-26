@@ -85,21 +85,24 @@ const SignupTeacher = ()=> {
               <div className="login__field">
                 <select name="pets" id="pet-select" className="login__input2" value={specialization} onChange={(e) => setSpecialization(e.target.value)}>
                   <option value="">Specialization</option>
-                  <option value="Python">Python</option>
                   <option value="JavaScript">JavaScript</option>
+                  <option value="Python">Python</option>
                   <option value="Reactjs">Reactjs</option>
                   <option value="Nodejs">Nodejs</option>
-                  <option value="SQL">SQL</option>
-                  <option value="Mongo">Mongo</option>
+                  <option value="SQL">MsSQL</option>
+                  <option value="Mongo">MongoDB</option>
+                  <option value="Mongo">Machine Learning, AI</option>
+                  <option value="Mongo">DevOps</option>
+                  <option value="Java">Java</option>
+                  <option value="C#">C#</option>
+                  <option value="C, C++">C, C++</option>
+                  <option value=".NET">.NET</option>
                 </select>
               </div>
 
               <div className="login__field">
                 <select name="pets" id="pet-select" className="login__input2" value={qualifications} onChange={(e) => setQualifications(e.target.value)}>
                   <option value="">Qualifications</option>
-                  <option value="High School Diploma">High School Diploma</option>
-                  <option value="Associate's Degree">Associate's Degree</option>
-                  <option value="Bachelor's Degree">Bachelor's Degree</option>
                   <option value="Master's Degree">Master's Degree</option>
                   <option value="PhD or Doctorate">PhD or Doctorate</option>
                   <option value="Teaching Certification">Teaching Certification</option>
@@ -109,7 +112,7 @@ const SignupTeacher = ()=> {
 
               <div className="login__field">
                 <select name="pets" id="pet-select" className="login__input2" value={experince} onChange={(e) => setExperince(e.target.value)}>
-                  <option value="">Teaching Experince</option>
+                  <option value="">Expertise</option>
                   <option value="More than 1 year">More than 1 year</option>
                   <option value="1-3 years">1-3 years</option>
                   <option value="3-5 years">3-5 years</option>
