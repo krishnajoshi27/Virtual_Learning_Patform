@@ -18,7 +18,7 @@ const Login = ()=>{
 
   const LoginRes = useSelector((state) => state.logIn.token.data);
   const SignupTeacherRes = useSelector((state) => state.signupTeacher.token.data);
-  // console.log('loginres... ', LoginRes);
+  console.log('loginres... ', LoginRes);
 
   useEffect(()=>{
     dispatch(SignupSuccess(''));
