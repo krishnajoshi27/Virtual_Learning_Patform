@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-let connection = mongoose.connect("mongodb://localhost:27017/VirtualLearning_dbms", {
+let connection = mongoose.connect("mongodb://127.0.0.1:27017/VirtualLearning_dbms", {
     useNewUrlParser: true,
     useUnifiedTopology: true
   }).then(connection => {

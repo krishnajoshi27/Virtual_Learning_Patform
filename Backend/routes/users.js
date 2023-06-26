@@ -41,7 +41,8 @@ router.post("/signup", async function (req, res, next) {
                 area_of_study,
                 skills,
                 is_verified: 0,
-                is_deleted: 0
+                is_deleted: 0,
+                role:'Student'
             })
             let saveUser = await userObject.save()
             if (saveUser) {
@@ -114,7 +115,8 @@ router.post("/sign_up", async function (req, res, next) {
                 area_of_teaching,
                 specialization,
                 is_verified: 0,
-                is_deleted: 0
+                is_deleted: 0,
+                role:'Teacher'
             })
             let saveUser = await userObject.save()
             if (saveUser) {

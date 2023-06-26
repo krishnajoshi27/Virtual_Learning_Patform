@@ -12,15 +12,6 @@ var userSchema = new mongoose.Schema({
     password: {
         type: String
     },
-    grade_level: {
-        type: String
-    },
-    area_of_study: {
-        type: String
-    },
-    skills: {
-        type: String
-    },
     created_at: {
         type: Date,
         default: Date.now()
@@ -29,10 +20,10 @@ var userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     },
-    is_deleted: {
-        type: Boolean
-    },
     token:{
+        type: String
+    },
+    role:{
         type: String
     }
 })

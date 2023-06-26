@@ -37,6 +37,9 @@ var teacherSchema = new mongoose.Schema({
     },
     user_id:{
         type : String
+    },
+    role:{
+        type: String
     }
 })
 
