@@ -88,7 +88,7 @@ function SignupStudent() {
                   <option value="First">Beginner</option>
                   <option value="Second">Intermediate</option>
                   <option value="Third">Advance</option>
-                  <option value="Fourth">Fluent</option>
+                  <option value="Fourth">Professional</option>
                 </select>
               </div>
 
