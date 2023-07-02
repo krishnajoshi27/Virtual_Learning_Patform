@@ -16,6 +16,40 @@ router.get("/", function (req, res, next) {
     });
 });
 
+/* GET Teachers. */
+router.get("/studentGet", async function (req, res, next) {
+
+    let checkUser = await user.find();
+    let teachersData = checkUser.filter((val) => val.specialization);
+    let StudentData = checkUser.filter((val) => val._id.toString() === req.query.id);
+    let skillsData = StudentData[0].skills;
+    let gradeLevel = StudentData[0].grade_level.toUpperCase();
+    let compareData = teachersData.filter((val) => val.specialization.toLowerCase() === skillsData.toLowerCase());
+    // console.log("reqreqreqreqreq/..... ", compareData, skillsData);
+    // console.log("gradeLevel..... ", gradeLevel);
+    let array = [];
+    if (gradeLevel === "BEGINNER") {
+        array = compareData.filter((val) => val.experience === "one")
+    } else if (gradeLevel === "INTERMEDIATE") {
+        array = compareData.filter((val) => val.experience === "two")
+    } else if (gradeLevel === "ADVANCE") {
+        array = compareData.filter((val) => val.experience === "three")
+    } else if (gradeLevel === "PROFESSIONAL") {
+        array = compareData.filter((val) => val.experience === "four")
+    }
+    // console.log("reqreqreqreqreq/..... ", array);
+
+    res.json({
+        status: true,
+        statusCode: 200,
+        message: "Got the message",
+        data: {
+            allTeachers: teachersData,
+            assignTeacher: array
+        }
+    });
+});
+
 /* POST learners. */
 router.post("/signup", async function (req, res, next) {
     try {
@@ -42,7 +76,7 @@ router.post("/signup", async function (req, res, next) {
                 skills,
                 is_verified: 0,
                 is_deleted: 0,
-                role:'Student'
+                role: 'Student'
             })
             let saveUser = await userObject.save()
             if (saveUser) {
@@ -80,16 +114,6 @@ router.post("/signup", async function (req, res, next) {
 }
 );
 
-/* GET Teachers. */
-router.get("/", function (req, res, next) {
-    res.json({
-        status: true,
-        statusCode: 200,
-        message: "Got the message",
-        data: { name: "krishna" },
-    });
-});
-
 /* POST Teachers. */
 router.post("/sign_up", async function (req, res, next) {
     try {
@@ -116,7 +140,7 @@ router.post("/sign_up", async function (req, res, next) {
                 specialization,
                 is_verified: 0,
                 is_deleted: 0,
-                role:'Teacher'
+                role: 'Teacher'
             })
             let saveUser = await userObject.save()
             if (saveUser) {
@@ -167,27 +191,27 @@ router.post("/login", async function (req, res) {
         })
 
         if (checkUser) {
-                    if (checkUser.password === password) {
-                        let payload = {
-                            id: checkUser._id,
-                            email: checkUser.email
-                        }
-                        let token = await issueJWT(payload)
-                        res.json({
-                            status: true,
-                            statusCode: 200,
-                            message: "User Login Successfully",
-                            data: checkUser,
-                            token: token
-                        })
-                    } else {
-                        res.json({
-                            status: false,
-                            statusCode: 400,
-                            message: "You Entered a Wrong Password .",
-                            data: ""
-                        })
-                    }
+            if (checkUser.password === password) {
+                let payload = {
+                    id: checkUser._id,
+                    email: checkUser.email
+                }
+                let token = await issueJWT(payload)
+                res.json({
+                    status: true,
+                    statusCode: 200,
+                    message: "User Login Successfully",
+                    data: checkUser,
+                    token: token
+                })
+            } else {
+                res.json({
+                    status: false,
+                    statusCode: 400,
+                    message: "You Entered a Wrong Password .",
+                    data: ""
+                })
+            }
 
         } else {
             res.json({

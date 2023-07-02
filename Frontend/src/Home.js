@@ -14,13 +14,18 @@ import imageuser from "./images/Illustration.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
 import ViewDetails from "./Components/ViewDetails";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getStudentApi } from "./redux/actions/studentHomeGetAction";
 
 
 
 const Home = () => {
+  const dispatch = useDispatch();
   const [show, setshow] = useState(false);
   const [name, setName] = useState(true);
+  const [role, setRole] = useState("");
+  const [allTeachers, setAllTeachers] = useState([]);
+  const [assignTeacher, setAssignTeacher] = useState([]);
   const [setting, setsetting] = useState(false);
   const [openModal, setsetOpenModal] = useState(false);
   const [view, setview] = useState(false);
@@ -30,13 +35,23 @@ const Home = () => {
   const [viewDetail, setViewDetail] = useState(false);
 
   const LoginRes = useSelector((state) => state.logIn.token.data);
-  console.log('sfsf... ', LoginRes);
+  const getStudentRes = useSelector((state) => state.getStudentReducer.token.data);
+  console.log('getStudentResgetStudentRes... ', getStudentRes);
 
-  useEffect(()=>{
-    if(LoginRes && LoginRes.data && LoginRes.data.name){
+  useEffect(() => {
+    if (LoginRes && LoginRes.data && LoginRes.data.name) {
+      setRole(LoginRes.data.role)
       setName(LoginRes.data.name);
+      dispatch(getStudentApi(LoginRes.data._id))
     }
-  },[LoginRes])
+  }, [LoginRes])
+  useEffect(() => {
+    if (getStudentRes && getStudentRes.data) {
+      setAllTeachers(getStudentRes.data.allTeachers)
+      setAssignTeacher(getStudentRes.data.assignTeacher
+      )
+    }
+  }, [getStudentRes])
 
   return (
     <>
@@ -118,79 +133,39 @@ const Home = () => {
           {show && (
             <div className="center">
               <div className="student">
-                <h4 className="title ">All Students</h4>
-                <div className="list">
-                  <div className="iconname">
-                    <div className="iconimg">
-                      {" "}
-                      <Link>
-                        <img className="instaimg" src={insta} alt="" />
-                      </Link>
+                <h4 className="title ">{role === "Student" ? "All Teachers" : "All Students"}</h4>
+                {allTeachers && allTeachers.map(val => {
+                  return (
+                    <div className="list">
+                      <div className="iconname">
+                        <div className="iconimg">
+                          {" "}
+                          <Link>
+                            <img className="instaimg" src={insta} alt="" />
+                          </Link>
+                        </div>
+                        <h4 className="data-name">{val.name}</h4>
+                      </div>
+                      <button
+                        className="btn"
+                        onClick={() => {
+                          setViewDetail(true);
+                          setshow(false);
+                        }}
+                      >
+                        View Info
+                      </button>
                     </div>
-                    <h4 className="data-name">Krishna Joshi</h4>
-                  </div>
-                  <button
-                    className="btn"
-                    onClick={() => {
-                      setViewDetail(true);
-                      setshow(false);
-                    }}
-                  >
-                    View Info
-                  </button>
-                </div>
-                <div className="list">
-                  <div className="iconname">
-                    <div className="iconimg">
-                      {" "}
-                      <Link>
-                        <img className="instaimg" src={insta} alt="" />
-                      </Link>
-                    </div>
-                    <h4 className="data-name">Krishna Joshi</h4>
-                  </div>
-                  <button className="btn">View Info</button>
-                </div>
-                <div className="list">
-                  <div className="iconname">
-                    <div className="iconimg">
-                      {" "}
-                      <Link>
-                        <img className="instaimg" src={insta} alt="" />
-                      </Link>
-                    </div>
-                    <h4 className="data-name">Krishna Joshi</h4>
-                  </div>
-                  <button className="btn">View Info</button>
-                </div>
-                <div className="list">
-                  <div className="iconname">
-                    <div className="iconimg">
-                      {" "}
-                      <Link>
-                        <img className="instaimg" src={insta} alt="" />
-                      </Link>
-                    </div>
-                    <h4 className="data-name">Krishna Joshi</h4>
-                  </div>
-                  <button className="btn">View Info</button>
-                </div>
-                <div className="list">
-                  <div className="iconname">
-                    <div className="iconimg">
-                      <Link>
-                        <img className="instaimg" src={insta} alt="" />
-                      </Link>
-                    </div>
-                    <h4 className="data-name">Krishna Joshi</h4>
-                  </div>
-                  <button className="btn">View Info</button>
-                </div>
+                  )
+                })
+                }
               </div>
 
               <div className="student">
-                <h4 className="title">All Teacher</h4>
-                <div className="list">
+                <h4 className="title">{role === "Student" ? "Assign to you" : "Upcomming classes"}</h4>
+               {assignTeacher && assignTeacher.map(val => {
+                return (
+                  <div className="list">
                   <div className="iconname">
                     <div className="iconimg">
                       {" "}
@@ -198,54 +173,16 @@ const Home = () => {
                         <img className="instaimg" src={insta} alt="" />
                       </Link>
                     </div>
-                    <h4 className="data-name">Krishna Joshi</h4>
+                    <h4 className="data-name">{val.name}</h4>
                   </div>
-                  <button className="btn">View Info</button>
+                  <button className="btn"
+                   onClick={() => {
+                    setViewDetail(true);
+                    setshow(false);
+                  }}>View Info</button>
                 </div>
-                <div className="list">
-                  <div className="iconname">
-                    <div className="iconimg">
-                      <Link>
-                        <img className="instaimg" src={insta} alt="" />
-                      </Link>
-                    </div>
-                    <h4 className="data-name">Krishna Joshi</h4>
-                  </div>
-                  <button className="btn">View Info</button>
-                </div>
-                <div className="list">
-                  <div className="iconname">
-                    <div className="iconimg">
-                      <Link>
-                        <img className="instaimg" src={insta} alt="" />
-                      </Link>
-                    </div>
-                    <h4 className="data-name">Krishna Joshi</h4>
-                  </div>
-                  <button className="btn">View Info</button>
-                </div>
-                <div className="list">
-                  <div className="iconname">
-                    <div className="iconimg">
-                      <Link>
-                        <img className="instaimg" src={insta} alt="" />
-                      </Link>
-                    </div>
-                    <h4 className="data-name">Krishna Joshi</h4>
-                  </div>
-                  <button className="btn">View Info</button>
-                </div>
-                <div className="list">
-                  <div className="iconname">
-                    <div className="iconimg">
-                      <Link>
-                        <img className="instaimg" src={insta} alt="" />
-                      </Link>
-                    </div>
-                    <h4 className="data-name">Krishna Joshi</h4>
-                  </div>
-                  <button className="btn">View Info</button>
-                </div>
+                )
+               }) }
               </div>
             </div>
           )}

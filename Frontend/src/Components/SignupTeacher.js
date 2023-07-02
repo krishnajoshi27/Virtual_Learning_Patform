@@ -113,11 +113,10 @@ const SignupTeacher = ()=> {
               <div className="login__field">
                 <select name="pets" id="pet-select" className="login__input2" value={experince} onChange={(e) => setExperince(e.target.value)}>
                   <option value="">Expertise</option>
-                  <option value="More than 1 year">More than 1 year</option>
-                  <option value="1-3 years">1-3 years</option>
-                  <option value="3-5 years">3-5 years</option>
-                  <option value="5-10 years">5-10 years</option>
-                  <option value="More Than 10 years">More Than 10 years</option>
+                  <option value="one">1-3 years</option>
+                  <option value="two">3-5 years</option>
+                  <option value="three">5-10 years</option>
+                  <option value="four">More Than 10 years</option>
                 </select>
               </div>
               <h5

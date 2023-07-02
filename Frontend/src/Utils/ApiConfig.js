@@ -111,6 +111,17 @@ JwtAuthService.newsApiService = async function (data) {
   }
 };
 
+JwtAuthService.studentGetApiService = async function (data) {
+  try {
+    const response = await axios.get(`${BASE_URL}users/studentGet?id=${data}`);
+    return response;
+  } catch (error) {
+    // toast.error(`${error?.response?.data?.message}`);
+    console.error(error);
+    return error;
+  }
+};
+
 JwtAuthService.signupStudentApiService = async function (data) {
   try {
     const response = await axios({

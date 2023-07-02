@@ -21,6 +21,15 @@ var userSchema = new mongoose.Schema({
     skills: {
         type: String
     },
+    experience: {
+        type: String
+    },
+    area_of_teaching: {
+        type: String
+    },
+    specialization: {
+        type: String
+    },
     created_at: {
         type: Date,
         default: Date.now()

@@ -85,10 +85,10 @@ function SignupStudent() {
               <div className="login__field">
                 <select name="Level" className="login__input2" value={gradLevel} onChange={(e) => setGradLevel(e.target.value)}>
                   <option value="">Knowledge Level</option>
-                  <option value="First">Beginner</option>
-                  <option value="Second">Intermediate</option>
-                  <option value="Third">Advance</option>
-                  <option value="Fourth">Professional</option>
+                  <option value="Beginner">Beginner</option>
+                  <option value="Intermediate">Intermediate</option>
+                  <option value="Advance">Advance</option>
+                  <option value="Professional">Professional</option>
                 </select>
               </div>
 
