@@ -1,38 +1,78 @@
-import React,{useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { SignupStudentApi } from "../redux/actions/signupStudentAction";
+import { SignupStudentApi, SignupSuccesss } from "../redux/actions/signupStudentAction";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+
 
 function SignupStudent() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [gradLevel, setGradLevel] = useState('');
-  const [areaOfStudy, setAreaOfStudy] = useState('');
-  const [skills, setSkills] = useState('');
-  const [language, setLanguage] = useState('');
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [gradLevel, setGradLevel] = useState("");
+  const [areaOfStudy, setAreaOfStudy] = useState("");
+  const [skills, setSkills] = useState("");
+  const [objective, setobjective] = useState("");
 
   const SignupStudentRes = useSelector((state) => state.signupStudent.token);
-  console.log('SignupStudentRes... ', SignupStudentRes);
+  console.log("SignupStudentRes... ", SignupStudentRes);
 
   useEffect(()=>{
-    if(SignupStudentRes && SignupStudentRes.status){
+dispatch(SignupSuccesss(""))
+},[] )
+  useEffect(() => {
+    if (SignupStudentRes && SignupStudentRes.status) {
       toast.success(SignupStudentRes.message);
       setTimeout(() => {
         navigate("/");
       }, 1000);
     }
-    if(SignupStudentRes && SignupStudentRes.status === false){
+    
+    if (SignupStudentRes && SignupStudentRes.status === false) {
       toast.error(SignupStudentRes.message);
     }
-  },[SignupStudentRes])
-
+  }, [SignupStudentRes]);
 
   const signUpStudentApiCall = (e) => {
     e.preventDefault(); // Prevent default form submission behavior
+
+
+  // Validations
+if (fullName === "" || !isNaN(fullName)) {
+  toast.error("Please provide a valid Fullname");
+  return;
+}
+else if (email === "" || !email.includes("@gmail.com")) {
+  toast.error("Please provide a valid email");
+  return;
+}
+ else if(password=="" || !isNaN(password)){
+  
+  toast.error("Please provide any Password")
+  return;
+ }
+
+ // // Email validation
+    // if (!email.includes("@gmail.com")) {
+    //   toast.error("Email must contain @gmail.com");
+    //   return;
+    // }
+
+    // // Validation checks
+    // if (
+    //   /^\d+$/.test(fullName) ||
+    //   /^\d+$/.test(password) ||
+    //   /^\d+$/.test(gradLevel) ||
+    //   /^\d+$/.test(areaOfStudy) ||
+    //   /^\d+$/.test(skills) ||
+    //   /^\d+$/.test(objective)
+    // ) {
+    //   toast.error("Numeric values are not allowed.");
+    //   return;
+    // }
+
     const sendData = {
       name: fullName,
       email: email,
@@ -40,14 +80,15 @@ function SignupStudent() {
       grade_level: gradLevel,
       area_of_study: areaOfStudy,
       skills: skills,
-      language:language
-    }
-    console.log('sendData... ', sendData);
+      objective: objective,
+    };
+    console.log("sendData... ", sendData);
     dispatch(SignupStudentApi(sendData));
-  }
+  };
 
   return (
     <>
+     <ToastContainer autoClose={4000} />
       <div className="login-container">
         <div className="screen2">
           <div className="screen__content2">
@@ -139,10 +180,10 @@ function SignupStudent() {
               </div>
               {/* <div className="login__field">
                 <select
-                  name="Preferred language"
+                  name="Preferred objective"
                   id="pet-select"
                   className="login__input2"
-                  value={language} onChange={(e) => setLanguage(e.target.value)}
+                  value={objective} onChange={(e) => setobjective(e.target.value)}
                 >
                   <option value="English(US)">English(US)</option>
                   <option value="Englist(UK)">Englist(UK)</option>

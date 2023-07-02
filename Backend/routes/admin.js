@@ -51,7 +51,7 @@ router.post("/signup", async function (req, res, next) {
       res.json({
         status: false,
         statusCode: 200,
-        message: "This Admin is Already Exits",
+        message: "This Admin Already Exits",
         data: "",
       });
     }

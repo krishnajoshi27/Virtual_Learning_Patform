@@ -18,12 +18,13 @@ const Login = ()=>{
 
   const LoginRes = useSelector((state) => state.logIn.token.data);
   const SignupTeacherRes = useSelector((state) => state.signupTeacher.token.data);
+  const SignupStudentRes = useSelector((state) => state.signupStudent.token);
   console.log('loginres... ', LoginRes);
 
   useEffect(()=>{
     dispatch(SignupSuccess(''));
     dispatch(SignupSuccesss(''));
-  },[SignupTeacherRes])
+  },[SignupTeacherRes, SignupStudentRes])
 
   useEffect(()=>{
     if(LoginRes && LoginRes.status){
