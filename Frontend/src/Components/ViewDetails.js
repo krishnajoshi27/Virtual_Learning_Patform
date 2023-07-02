@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import frame from "../images/Frame.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+
 function ViewDetails() {
+  const [gradLevel, setGradLevel] = useState("");
+  const [gradLevell, setGradLevell] = useState("");
+  
   return (
     <div className="details">
       <h4 className="title ">All Courses</h4>
@@ -28,25 +32,42 @@ function ViewDetails() {
         <div style={{ textAlign: "center", margin: "20px 0px" }}>
           Request teacher to schedule classes:{" "}
         </div>
-        <div style={{ display: "flex", justifyContent: "space-around" }}>
-          <button className="btn">Online</button>
-          <button className="btn">In-Person</button>
+        {/* <div className="login__field" >
+                <select name="Level" className="login__input2" value={gradLevel} onChange={(e) => setGradLevel(e.target.value)}>
+                  <option value="">Select Mode</option>
+                  <option value="First">Online</option>
+                  <option value="Second">In-Person</option>
+
+                </select>
+              </div> */}
+
+        <div className="login__field" style={{ textAlign: "left" }}>
+          <select
+            name="Level"
+            className="login__input2"
+            value={gradLevel}
+            onChange={(e) => setGradLevel(e.target.value)}
+            style={{ float: "left" }}
+          >
+            <option value="">Select Mode</option>
+            <option value="First">Online</option>
+            <option value="Second">In-Person</option>
+          </select>
         </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-            marginTop: "20px",
-          }}
-        >
-          <div style={{ display: "flex", gap: "10px" }}>
-            <button className="btn">Group</button>
-            <button className="btn">Individual</button>
-          </div>
-          <div style={{ display: "flex", gap: "10px" }}>
-            <button className="btn">Group</button>
-            <button className="btn">Individual</button>
-          </div>
+
+
+        <div className="login__field" style={{ textAlign: "right" }}>
+          <select
+            name="Level"
+            className="login__input2"
+            value={gradLevell}
+            onChange={(e) => setGradLevell(e.target.value)}
+            style={{ float: "left" }}
+          >
+            <option value="">Ambience</option>
+            <option value="First">Group</option>
+            <option value="Second">Individual</option>
+          </select>
         </div>
       </div>
     </div>
@@ -54,3 +75,4 @@ function ViewDetails() {
 }
 
 export default ViewDetails;
+
