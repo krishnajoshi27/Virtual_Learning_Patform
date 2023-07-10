@@ -100,6 +100,38 @@ JwtAuthService.loginApiService = async function (data) {
   }
 };
 
+JwtAuthService.adminLoginApiService = async function (data) {
+  try {
+    const response = await axios({
+      method: 'post',  
+      url:BASE_URL + `admin/login`,
+      data:JSON.stringify(data),
+      headers: {
+          "Content-Type": "application/json",
+        },
+    });
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+JwtAuthService.createPostService = async function (data) {
+  try {
+    const response = await axios({
+      method: 'post',  
+      url:BASE_URL + `admin/createPost`,
+      data:JSON.stringify(data),
+      headers: {
+          "Content-Type": "application/json",
+        },
+    });
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 JwtAuthService.newsApiService = async function (data) {
   try {
     const response = await axios.get(`${BASE_URL}common/newsList`);

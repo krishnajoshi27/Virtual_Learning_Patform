@@ -15,9 +15,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
 import ViewDetails from "./Components/ViewDetails";
 import { useDispatch, useSelector } from "react-redux";
-import { getStudentApi } from "./redux/actions/studentHomeGetAction";
+import AdminAdd from "./Components/AdminAdd";
 
-const Home = () => {
+const AdminHome = () => {
   const dispatch = useDispatch();
   const [show, setshow] = useState(false);
   const [name, setName] = useState("");
@@ -32,34 +32,15 @@ const Home = () => {
   const [course, setcourse] = useState(true);
   const [viewDetail, setViewDetail] = useState(false);
 
-  const LoginRes = useSelector((state) => state.logIn.token.data);
   const AdminLoginRes = useSelector((state) => state.adminLoginReducer.token.data);
-  const getStudentRes = useSelector((state) => state.getStudentReducer.token.data);
-  console.log('getStudentResgetStudentRes... ', getStudentRes);
-
-  useEffect(() => {
-    if (LoginRes && LoginRes.data && LoginRes.data.name) {
-      setRole(LoginRes.data.role)
-      setName(LoginRes.data.name);
-      dispatch(getStudentApi(LoginRes.data._id))
-    }
-  }, [LoginRes])
 
   useEffect(() => {
     if (AdminLoginRes && AdminLoginRes.data && AdminLoginRes.data.name) {
       setRole(AdminLoginRes.data.role)
       setName(AdminLoginRes.data.name);
-      dispatch(getStudentApi(AdminLoginRes.data._id))
+    //   dispatch(getStudentApi(AdminLoginRes.data._id))
     }
   }, [AdminLoginRes])
-
-  useEffect(() => {
-    if (getStudentRes && getStudentRes.data) {
-      setAllTeachers(getStudentRes.data.allTeachers)
-      setAssignTeacher(getStudentRes.data.assignTeacher
-      )
-    }
-  }, [getStudentRes])
 
   return (
     <>
@@ -141,7 +122,7 @@ const Home = () => {
           {show && (
             <div className="center">
               <div className="student">
-                <h4 className="title ">{role === "Student" ? "All Teachers" : "All Students"}</h4>
+                <h4 className="title ">All Students</h4>
                 {allTeachers && allTeachers.map(val => {
                   return (
                     <div className="list">
@@ -170,7 +151,7 @@ const Home = () => {
               </div>
 
               <div className="student">
-                <h4 className="title">{role === "Student" ? "Assign to you" : "Upcomming classes"}</h4>
+                <h4 className="title">All Teachers</h4>
                {assignTeacher && assignTeacher.map(val => {
                 return (
                   <div className="list">
@@ -195,7 +176,7 @@ const Home = () => {
             </div>
           )}
           {setting && <SettingScreen />}
-          {course && <Course />}
+          {course && <AdminAdd />}
           {viewDetail && <ViewDetails />}
         </div>
       </div>
@@ -268,4 +249,4 @@ const Home = () => {
   );
 }
 
-export default Home;
+export default AdminHome;
