@@ -5,11 +5,14 @@ import Ticker, { FinancialTicker, NewsTicker } from "nice-react-ticker";
 import icon from "../../src/images/insta.png"; // add images, please make sure they can be set as src
 import { CreatePostApi, PostSuccess } from "../redux/actions/createPostAction";
 import { ToastContainer, toast } from "react-toastify";
+import { SignupSuccess, SignupTeacherApi } from "../redux/actions/signupTeacherAction";
+import { SignupStudentApi, SignupSuccesss } from "../redux/actions/signupStudentAction";
 
 const AdminAdd = () => {
     const dispatch = useDispatch();
     const postRes = useSelector((state) => state.CreatePostReducer.token.data);
-    console.log('postRes... ', postRes);
+    const SignupStudentRes = useSelector((state) => state.signupStudent.token);
+    const SignupTeacherRes = useSelector((state) => state.signupTeacher.token.data);
     const [heading, setHeading] = useState("News & Announcement");
     const [newsState, setNewsState] = useState({
         heading: '',
@@ -31,6 +34,27 @@ const AdminAdd = () => {
     const [skills, setSkills] = useState("");
     const [objective, setobjective] = useState("");
 
+
+    useEffect(()=>{
+        if(SignupTeacherRes && SignupTeacherRes.status){
+          toast.success(SignupTeacherRes.message);
+          dispatch(SignupSuccess(""));
+        }
+        if(SignupTeacherRes && SignupTeacherRes.status === false){
+          toast.error(SignupTeacherRes.message);
+        }
+      },[SignupTeacherRes])
+
+      useEffect(() => {
+        if (SignupStudentRes && SignupStudentRes.status) {
+          toast.success(SignupStudentRes.message);
+          dispatch(SignupSuccesss(""));
+        }
+        
+        if (SignupStudentRes && SignupStudentRes.status === false) {
+          toast.error(SignupStudentRes.message);
+        }
+      }, [SignupStudentRes]);
 
     useEffect(() => {
         if (postRes && postRes.status) {
@@ -59,7 +83,48 @@ const AdminAdd = () => {
         setNewsState(blankObj)
     }
 
-    console.log(newsState);
+    const signUpTeacherApiCall = (e) => {
+        e.preventDefault(); // Prevent default form submission behavior
+        const sendData = {
+            name: fullName,
+            email: email,
+            password: password,
+            experience: experince,
+            area_of_teaching: qualifications,
+            specialization: specialization,
+        }
+        console.log('sendData... ', sendData);
+        dispatch(SignupTeacherApi(sendData));
+    }
+
+    const signUpStudentApiCall = (e) => {
+        e.preventDefault(); // Prevent default form submission behavior
+    
+        if (fullName1 === "") {
+      toast.error("Please provide a valid Fullname");
+      return;
+    }
+    else if (email1 === "") {
+      toast.error("Please provide a valid email");
+      return;
+    }
+     else if(password1 ==""){
+      
+      toast.error("Please provide any Password")
+      return;
+     }
+        const sendData = {
+          name: fullName1,
+          email: email1,
+          password: password1,
+          grade_level: gradLevel,
+          area_of_study: areaOfStudy,
+          skills: skills,
+          objective: objective,
+        };
+        console.log("sendData... ", sendData);
+        dispatch(SignupStudentApi(sendData));
+      };
     return (
         <>        <ToastContainer autoClose={2000} />
             <div className="center2">
@@ -67,7 +132,7 @@ const AdminAdd = () => {
                     <div className="dropdown">
                         <div className="Functionality-div">
                             <h4 for="cars">Functionality</h4>
-                            <select  className="login__input2" onChange={(e) => setHeading(e.target.value)} style={{ marginTop: '10px' }} name="cars" id="cars">
+                            <select className="login__input2" onChange={(e) => setHeading(e.target.value)} style={{ marginTop: '10px' }} name="cars" id="cars">
                                 <option value="News & Announcement">News & Announcement</option>
                                 <option value="Course">Course</option>
                                 <option value="Teacher">Teacher</option>
@@ -223,7 +288,7 @@ const AdminAdd = () => {
                                     </select>
                                 </div>
                                 <div className="login__field">
-                                    <button className="post_btn">Submit</button>
+                                    <button onClick={signUpStudentApiCall} className="post_btn">Submit</button>
                                 </div>
                             </form>
                         }
@@ -294,7 +359,9 @@ const AdminAdd = () => {
                                         <option value="four">More Than 10 years</option>
                                     </select>
                                 </div>
-                                <button onClick={() => createPostApiCall()} className="post_btn">Post</button>
+                                <button onClick={
+                                    signUpTeacherApiCall
+                                } className="post_btn">Post</button>
                             </form>
                         }
                     </div>
